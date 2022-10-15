@@ -1,4 +1,3 @@
-# Avito_Pars_Apartamets
 Apartment parser with Avito
 =====================
 
