@@ -44,10 +44,6 @@ class browsr():
                 renderer="Intel Iris OpenGL Engine",
                 fix_hairline=True,
                 )
-        # avito = f"https://www.avito.ru/tver/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd={1}"
-        # self.driver.get(f"{self.url}{self.page}")
-        # block = self.driver.find_element(By.CLASS_NAME, 'items-items-kAJAg')
-        # self.pos = block.find_elements(By.CLASS_NAME, 'iva-item-body-KLUuy')
 
     def wrt(self, name,description, price,path): # writer xl
         print(name)
@@ -85,13 +81,7 @@ class browsr():
                 self.page += 1
         self.__book.close()
 
-    # @property
-    # def Get_all(self):
-    #     for i in range(1, 3):
-    #         self.Get_Elements
-    #         self.page += 1
-    #         print(self.page)
-    #     self.__book.close()
+
 
 
 avito = browsr(
