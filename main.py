@@ -20,8 +20,10 @@ class browsr():
         self.__column = 0
 
         self.__page.set_column("A:A", 100)
-        self.__page.set_column("B:B", 70)
+        self.__page.set_column("B:B", 100)
         self.__page.set_column("C:C", 50)
+        self.__page.set_column("D:D", 50)
+        self.__page.set_column("E:E", 50)
 
     def drive(self): # inicialization parametrs
         options = webdriver.ChromeOptions()
@@ -47,14 +49,16 @@ class browsr():
         # block = self.driver.find_element(By.CLASS_NAME, 'items-items-kAJAg')
         # self.pos = block.find_elements(By.CLASS_NAME, 'iva-item-body-KLUuy')
 
-    def wrt(self, name, price): # writer xl
+    def wrt(self, name,description, price,path): # writer xl
         print(name)
         self.__page.write(self.__row, self.__column, name)
-        self.__page.write(self.__row, self.__column + 1, price[0])
+        self.__page.write(self.__row, self.__column+1, description)
+        self.__page.write(self.__row, self.__column + 2, price[0])
         if len(price) == 1:
-            self.__page.write(self.__row, self.__column + 2, 'None')
+            self.__page.write(self.__row, self.__column + 3, 'None')
         else:
-            self.__page.write(self.__row, self.__column + 2, price[1])
+            self.__page.write(self.__row, self.__column + 3, price[1])
+        self.__page.write(self.__row, self.__column+4, path)
 
         self.__row += 1
 
@@ -67,11 +71,17 @@ class browsr():
             finally:
                 block = self.__driver.find_element(By.CLASS_NAME, 'items-items-kAJAg')
                 pos = block.find_elements(By.CLASS_NAME, 'iva-item-body-KLUuy')
+                #path = block.find_element(By.CLASS_NAME, 'iva-item-sliderLink-uLz1v').get_attribute('href')
                 for p in pos:
+                    path=p.find_element(By.CLASS_NAME,'iva-item-titleStep-pdebR').find_element(By.TAG_NAME,'a').get_attribute('href')
+                    try:
+                        description=p.find_element(By.CLASS_NAME,'iva-item-descriptionStep-C0ty1').find_element(By.CLASS_NAME,'iva-item-text-Ge6dR').text
+                    except:
+                        description=None
                     name = p.find_element(By.CLASS_NAME, 'iva-item-titleStep-pdebR').text
                     price = p.find_element(By.CLASS_NAME, 'iva-item-priceStep-uq2CQ').text.split('\n')
-                    print(price)
-                    self.wrt(name, price)
+                    print(description)
+                    self.wrt(name, description,price,path)
                 self.page += 1
         self.__book.close()
 
@@ -85,6 +95,6 @@ class browsr():
 
 
 avito = browsr(
-    'https://www.avito.ru/tver/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&p=')  # insert address without page pointer
+    'https://www.avito.ru/tver/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&p=',2)  # insert address without page pointer
 
 avito.Get_Elements
